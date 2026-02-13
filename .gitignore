@@ -60,3 +60,5 @@ memory/
 *.tmp
 *.temp
 .cache/
+.vercel
+.env*.local
