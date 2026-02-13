@@ -12,7 +12,7 @@ export const metadata = {
 
 export default async function BolosPage() {
   const result = await listarBolos(true); // apenas disponíveis
-  const bolos = result.success ? result.data : [];
+  const bolos = result.data ?? [];
 
   return (
     <>

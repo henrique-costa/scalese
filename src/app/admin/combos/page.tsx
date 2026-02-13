@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function AdminCombosPage() {
   const result = await listarCombos(false);
-  const combos = result.success ? result.data : [];
+  const combos = result.data ?? [];
 
   return (
     <div>

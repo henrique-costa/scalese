@@ -12,7 +12,7 @@ export const metadata = {
 
 export default async function CombosPage() {
   const result = await listarCombos(true); // apenas disponíveis
-  const combos = result.success ? result.data : [];
+  const combos = result.data ?? [];
 
   return (
     <>

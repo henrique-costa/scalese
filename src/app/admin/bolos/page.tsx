@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function AdminBolosPage() {
   const result = await listarBolos(false);
-  const bolos = result.success ? result.data : [];
+  const bolos = result.data ?? [];
 
   return (
     <div>

@@ -12,7 +12,7 @@ export const metadata = {
 
 export default async function BombonsPage() {
   const result = await listarBombons(true); // apenas disponíveis
-  const bombons = result.success ? result.data : [];
+  const bombons = result.data ?? [];
 
   return (
     <>

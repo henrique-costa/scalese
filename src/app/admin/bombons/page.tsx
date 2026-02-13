@@ -8,7 +8,7 @@ export const metadata = {
 
 export default async function AdminBombonsPage() {
   const result = await listarBombons(false); // incluir indisponíveis
-  const bombons = result.success ? result.data : [];
+  const bombons = result.data ?? [];
 
   return (
     <div>
