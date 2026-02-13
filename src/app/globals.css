@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Confetteria Scalese - Design Tokens */
+  --color-rose: #E8A0BF;
+  --color-rose-light: #F5D0E0;
+  --color-rose-dark: #C47A9A;
+  --color-gold: #C9A96E;
+  --color-gold-light: #E8D5A8;
+  --color-gold-dark: #A88A4E;
+  --color-mint: #8DBFAB;
+  --color-mint-light: #B5D9CC;
+  --color-chocolate: #5C3D2E;
+  --color-chocolate-light: #8B6F5E;
+  --color-cream: #FFF8F0;
+  --color-cream-warm: #FDF2E9;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-brand-cream text-brand-chocolate font-body;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+
+  ::selection {
+    background-color: var(--color-rose-light);
+    color: var(--color-chocolate);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-rose text-white font-body font-bold px-6 py-3 rounded-xl
+           hover:bg-brand-rose-dark transition-all duration-300
+           shadow-soft hover:shadow-card active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply bg-transparent border-2 border-brand-gold text-brand-gold font-body font-bold
+           px-6 py-3 rounded-xl hover:bg-brand-gold hover:text-white
+           transition-all duration-300;
+  }
+
+  .btn-accent {
+    @apply bg-brand-mint text-white font-body font-bold px-6 py-3 rounded-xl
+           hover:bg-brand-mint-light hover:text-brand-chocolate
+           transition-all duration-300 shadow-soft;
+  }
+
+  .card-product {
+    @apply bg-white rounded-2xl shadow-card overflow-hidden
+           transition-all duration-300 hover:shadow-elevated hover:-translate-y-1;
+  }
+
+  .section-title {
+    @apply font-display text-3xl md:text-4xl font-bold text-brand-chocolate;
+  }
+
+  .section-subtitle {
+    @apply font-accent text-xl md:text-2xl text-brand-rose-dark;
+  }
+
+  .gold-divider {
+    @apply h-[2px] bg-gradient-to-r from-transparent via-brand-gold to-transparent;
+  }
+
+  .text-gradient-rose {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-rose to-brand-rose-dark;
+  }
+}
+
+@layer utilities {
+  .container-scalese {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Animações */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 1s ease-out forwards;
+  }
+
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .delay-300 {
+    animation-delay: 0.3s;
+  }
+
+  .delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .delay-500 {
+    animation-delay: 0.5s;
+  }
+
+  .delay-700 {
+    animation-delay: 0.7s;
+  }
+}

@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.yarn/
+yarn-error.log*
+package-lock.json
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# Environment Variables - NUNCA COMMITAR
+.env*
+*.env
+
+# Database
+prisma/dev.db
+prisma/dev.db-journal
+*.db
+*.db-journal
+
+# Testing
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# IDE & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Documentation & Internal Files
+.claude/
+*.md.backup
+CLAUDE_CONTEXT.md
+INSTRUCOES_LOGO.md
+UPLOAD_IMAGENS.md
+DEPLOY_VERCEL.md
+memory/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/

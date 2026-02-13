@@ -1,0 +1,70 @@
+// =============================================
+// Confetteria Scalese - Schema do Banco de Dados
+// =============================================
+// 3 Entidades: Bombom, Bolo, ComboFesta
+// Cada uma com campos específicos ao tipo de produto
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ---- Bombons (trufas, brigadeiros, chocolates artesanais) ----
+model Bombom {
+  id          String   @id @default(cuid())
+  nome        String
+  descricao   String
+  preco       Float
+  imagemUrl   String?
+  sabor       String   // ex: "chocolate", "beijinho", "pistache"
+  peso        Int      // em gramas
+  unidades    Int      @default(1) // quantidade por embalagem
+  destaque    Boolean  @default(false)
+  disponivel  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("bombons")
+}
+
+// ---- Bolos (decorados, temáticos, personalizados) ----
+model Bolo {
+  id          String   @id @default(cuid())
+  nome        String
+  descricao   String
+  preco       Float
+  imagemUrl   String?
+  sabor       String   // ex: "chocolate", "baunilha", "red velvet"
+  tamanho     String   // ex: "P", "M", "G", "GG"
+  porcoes     Int      // número de fatias/porções
+  personalizado Boolean @default(false)
+  destaque    Boolean  @default(false)
+  disponivel  Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("bolos")
+}
+
+// ---- Combos Festa (kits completos para eventos) ----
+model ComboFesta {
+  id              String   @id @default(cuid())
+  nome            String
+  descricao       String
+  preco           Float
+  imagemUrl       String?
+  itensInclusos   String   // JSON string: lista de itens do combo
+  servePessoas    Int      // para quantas pessoas
+  temaBolo        String?  // tema do bolo incluído, se houver
+  destaque        Boolean  @default(false)
+  disponivel      Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("combos_festa")
+}

@@ -1,0 +1,43 @@
+{
+  "name": "confetteria-scalese",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "tsx prisma/seed.ts",
+    "db:studio": "prisma studio",
+    "db:migrate": "prisma migrate dev",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "@clerk/localizations": "^3.35.3",
+    "@clerk/nextjs": "^6.37.3",
+    "lucide-react": "^0.563.0",
+    "next": "^16.1.6",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@prisma/client": "^6.19.2",
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.11.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.4.17",
+    "jest": "^29.7.0",
+    "postcss": "^8.4.35",
+    "prisma": "^6.19.2",
+    "tailwindcss": "^3.4.1",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  }
+}
