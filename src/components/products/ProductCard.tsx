@@ -8,7 +8,7 @@ interface ProductCardProps {
   nome: string;
   descricao: string;
   preco: number;
-  imagemUrl: string;
+  imagemUrl: string | null;
   sabor?: string;
   destaque?: boolean;
   badge?: string; // Ex: "50g", "Serve 10", "M (1kg)"
@@ -38,7 +38,7 @@ export default function ProductCard({
       {/* Imagem do produto */}
       <div className="relative aspect-square overflow-hidden bg-brand-cream-warm">
         <Image
-          src={imagemUrl}
+          src={imagemUrl ?? "/logo-scalese.png"}
           alt={nome}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-110"

@@ -17,9 +17,9 @@ export default async function Home() {
   ]);
 
   const destaques = [
-    ...(bombonsRes.success ? bombonsRes.data : []),
-    ...(bolosRes.success ? bolosRes.data : []),
-    ...(combosRes.success ? combosRes.data : []),
+    ...(bombonsRes.data ?? []),
+    ...(bolosRes.data ?? []),
+    ...(combosRes.data ?? []),
   ].slice(0, 6);
 
   return (
@@ -128,7 +128,7 @@ export default async function Home() {
                       descricao={produto.descricao}
                       preco={produto.preco}
                       imagemUrl={produto.imagemUrl}
-                      sabor={produto.sabor}
+                      sabor={"sabor" in produto ? produto.sabor : undefined}
                       destaque={produto.destaque}
                       badge={badge}
                     />

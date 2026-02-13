@@ -8,7 +8,7 @@ interface ComboCardProps {
   nome: string;
   descricao: string;
   preco: number;
-  imagemUrl: string;
+  imagemUrl: string | null;
   itensInclusos: string; // JSON string
   servePessoas: number;
   temaBolo?: string | null;
@@ -49,7 +49,7 @@ export default function ComboCard({
         {/* Imagem do combo */}
         <div className="relative aspect-square md:aspect-auto overflow-hidden bg-brand-cream-warm">
           <Image
-            src={imagemUrl}
+            src={imagemUrl ?? "/logo-scalese.png"}
             alt={nome}
             fill
             className="object-cover transition-transform duration-500 group-hover:scale-110"
