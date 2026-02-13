@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import FormInput from "./FormInput";
 import FormTextarea from "./FormTextarea";
 import ToggleSwitch from "./ToggleSwitch";
+import ImageUpload from "./ImageUpload";
 import { adminCriarCombo, adminAtualizarCombo } from "@/actions";
 import type { ComboFesta } from "@prisma/client";
 
@@ -170,13 +171,9 @@ export default function ComboForm({ combo, onSuccess }: ComboFormProps) {
         />
       </div>
 
-      <FormInput
-        label="URL da Imagem"
-        name="imagemUrl"
-        type="url"
-        value={formData.imagemUrl}
-        onChange={(value) => setFormData({ ...formData, imagemUrl: value as string })}
-        placeholder="https://exemplo.com/imagem.jpg"
+      <ImageUpload
+        currentUrl={formData.imagemUrl}
+        onUpload={(url) => setFormData({ ...formData, imagemUrl: url })}
       />
 
       {/* Itens Inclusos */}

@@ -6,6 +6,7 @@ import FormInput from "./FormInput";
 import FormTextarea from "./FormTextarea";
 import FormSelect from "./FormSelect";
 import ToggleSwitch from "./ToggleSwitch";
+import ImageUpload from "./ImageUpload";
 import { adminCriarBolo, adminAtualizarBolo } from "@/actions";
 import type { Bolo } from "@prisma/client";
 
@@ -41,6 +42,7 @@ export default function BoloForm({ bolo, onSuccess }: BoloFormProps) {
       const data = {
         ...formData,
         imagemUrl: formData.imagemUrl || null,
+        tamanho: formData.tamanho as "P" | "M" | "G" | "GG",
       };
 
       let result;
@@ -153,13 +155,9 @@ export default function BoloForm({ bolo, onSuccess }: BoloFormProps) {
         />
       </div>
 
-      <FormInput
-        label="URL da Imagem"
-        name="imagemUrl"
-        type="url"
-        value={formData.imagemUrl}
-        onChange={(value) => setFormData({ ...formData, imagemUrl: value as string })}
-        placeholder="https://exemplo.com/imagem.jpg"
+      <ImageUpload
+        currentUrl={formData.imagemUrl}
+        onUpload={(url) => setFormData({ ...formData, imagemUrl: url })}
       />
 
       <div className="flex flex-wrap gap-6">
