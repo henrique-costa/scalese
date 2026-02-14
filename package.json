@@ -22,6 +22,7 @@
   "dependencies": {
     "@clerk/localizations": "^3.35.3",
     "@clerk/nextjs": "^6.37.3",
+    "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^2.2.0",
     "lucide-react": "^0.563.0",
     "next": "^16.1.6",
