@@ -74,6 +74,7 @@ export default function BolosList({ bolos }: BolosListProps) {
               sabor={bolo.sabor}
               destaque={bolo.destaque}
               badge={`${bolo.tamanho} · ${bolo.porcoes} porções`}
+              productType="BOLO"
             />
           ))}
         </div>

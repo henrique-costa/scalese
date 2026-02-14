@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
+import { useCart } from "@/contexts/CartContext";
+import type { ProductType } from "@prisma/client";
 
 interface ProductCardProps {
   id: string;
@@ -12,6 +14,7 @@ interface ProductCardProps {
   sabor?: string;
   destaque?: boolean;
   badge?: string; // Ex: "50g", "Serve 10", "M (1kg)"
+  productType?: ProductType;
   onAddToCart?: (id: string) => void;
 }
 
@@ -24,8 +27,10 @@ export default function ProductCard({
   sabor,
   destaque,
   badge,
+  productType,
   onAddToCart,
 }: ProductCardProps) {
+  const { addItem, isLoading } = useCart();
   return (
     <div className="card-product group relative">
       {/* Badge de destaque */}
@@ -80,11 +85,18 @@ export default function ProductCard({
             </p>
           </div>
           <button
-            onClick={() => onAddToCart?.(id)}
-            className="btn-primary text-sm whitespace-nowrap"
+            onClick={() => {
+              if (onAddToCart) {
+                onAddToCart(id);
+              } else if (productType) {
+                addItem(id, productType);
+              }
+            }}
+            disabled={isLoading}
+            className="btn-primary text-sm whitespace-nowrap disabled:opacity-50"
             aria-label={`Adicionar ${nome} ao carrinho`}
           >
-            Adicionar
+            {isLoading ? "..." : "Adicionar"}
           </button>
         </div>
       </div>

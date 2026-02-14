@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
+import { useCart } from "@/contexts/CartContext";
 
 interface ComboCardProps {
   id: string;
@@ -28,6 +29,7 @@ export default function ComboCard({
   destaque,
   onAddToCart,
 }: ComboCardProps) {
+  const { addItem, isLoading } = useCart();
   // Parse dos itens inclusos
   let itens: string[] = [];
   try {
@@ -110,11 +112,18 @@ export default function ComboCard({
               </p>
             </div>
             <button
-              onClick={() => onAddToCart?.(id)}
-              className="btn-primary text-base whitespace-nowrap"
+              onClick={() => {
+                if (onAddToCart) {
+                  onAddToCart(id);
+                } else {
+                  addItem(id, "COMBO");
+                }
+              }}
+              disabled={isLoading}
+              className="btn-primary text-base whitespace-nowrap disabled:opacity-50"
               aria-label={`Adicionar ${nome} ao carrinho`}
             >
-              Adicionar
+              {isLoading ? "..." : "Adicionar"}
             </button>
           </div>
         </div>

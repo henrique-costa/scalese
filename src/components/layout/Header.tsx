@@ -3,11 +3,14 @@
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-// import Logo from "./Logo"; // Comentado temporariamente
+import { ShoppingBag } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import CartDrawer from "@/components/cart/CartDrawer";
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { itemCount, toggleCart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,8 +63,26 @@ export default function Header() {
           </NavLink>
         </nav>
 
-        {/* Auth + Mobile Toggle */}
+        {/* Cart + Auth + Mobile Toggle */}
         <div className="flex items-center gap-4">
+          {/* Cart button */}
+          <button
+            onClick={toggleCart}
+            className={`relative p-2 transition-colors ${
+              isScrolled
+                ? "text-brand-chocolate hover:text-brand-rose"
+                : "text-white hover:text-brand-rose-light"
+            }`}
+            aria-label="Abrir carrinho"
+          >
+            <ShoppingBag size={22} />
+            {itemCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-brand-rose text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                {itemCount > 99 ? "99+" : itemCount}
+              </span>
+            )}
+          </button>
+
           <SignedIn>
             <Link
               href="/admin"
@@ -168,6 +189,7 @@ export default function Header() {
           </nav>
         </div>
       )}
+      <CartDrawer />
     </header>
   );
 }

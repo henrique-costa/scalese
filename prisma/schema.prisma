@@ -14,6 +14,28 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+// ---- Enums ----
+enum CartStatus {
+  ACTIVE
+  MERGED
+  ABANDONED
+}
+
+enum ProductType {
+  BOMBOM
+  BOLO
+  COMBO
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_PRODUCTION
+  READY
+  COMPLETED
+  CANCELED
+}
+
 // ---- Bombons (trufas, brigadeiros, chocolates artesanais) ----
 model Bombom {
   id          String   @id @default(cuid())
@@ -67,4 +89,59 @@ model ComboFesta {
   updatedAt       DateTime @updatedAt
 
   @@map("combos_festa")
+}
+
+// ---- Carrinho de Compras ----
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String?
+  sessionId String?
+  status    CartStatus @default(ACTIVE)
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@map("carts")
+}
+
+model CartItem {
+  id          String      @id @default(cuid())
+  cart        Cart        @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId      String
+  productId   String
+  productType ProductType
+  quantity    Int         @default(1)
+  unitPrice   Float
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@unique([cartId, productId, productType])
+  @@map("cart_items")
+}
+
+// ---- Pedidos ----
+model Order {
+  id          String      @id @default(cuid())
+  userId      String
+  totalAmount Float
+  status      OrderStatus @default(PENDING)
+  items       OrderItem[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id          String      @id @default(cuid())
+  order       Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String
+  productId   String
+  productType ProductType
+  productName String
+  quantity    Int
+  unitPrice   Float
+  createdAt   DateTime    @default(now())
+
+  @@map("order_items")
 }

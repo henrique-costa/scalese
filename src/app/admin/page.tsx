@@ -2,13 +2,21 @@ import prisma from "@/lib/prisma";
 
 export default async function AdminDashboard() {
   // Contadores rápidos
-  const [totalBombons, totalBolos, totalCombos] = await Promise.all([
+  const [totalBombons, totalBolos, totalCombos, totalPedidos] = await Promise.all([
     prisma.bombom.count(),
     prisma.bolo.count(),
     prisma.comboFesta.count(),
+    prisma.order.count(),
   ]);
 
   const stats = [
+    {
+      label: "Pedidos",
+      count: totalPedidos,
+      href: "/admin/pedidos",
+      emoji: "🛒",
+      color: "bg-green-100",
+    },
     {
       label: "Bombons",
       count: totalBombons,
@@ -41,7 +49,7 @@ export default async function AdminDashboard() {
         Gerencie os produtos da Confetteria Scalese
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => (
           <a
             key={stat.label}
@@ -59,19 +67,6 @@ export default async function AdminDashboard() {
         ))}
       </div>
 
-      <div className="mt-12 p-6 bg-white rounded-2xl shadow-soft">
-        <h2 className="font-display text-xl font-bold text-brand-chocolate mb-2">
-          Próximos passos
-        </h2>
-        <p className="font-body text-brand-chocolate-light text-sm">
-          O CRUD completo com formulários visuais será implementado no Passo 4.
-          Por enquanto, use o Prisma Studio (
-          <code className="bg-brand-cream px-2 py-0.5 rounded text-xs">
-            npm run db:studio
-          </code>
-          ) para gerenciar produtos.
-        </p>
-      </div>
     </div>
   );
 }

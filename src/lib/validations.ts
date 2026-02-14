@@ -87,6 +87,28 @@ export const ComboFestaUpdateSchema = ComboFestaCreateSchema.partial().extend({
   id: z.string().cuid(),
 });
 
+// ---- Carrinho ----
+export const ProductTypeEnum = z.enum(["BOMBOM", "BOLO", "COMBO"]);
+
+export const AddToCartSchema = z.object({
+  productId: z.string().cuid(),
+  productType: ProductTypeEnum,
+  quantity: z.number().int().positive().default(1),
+});
+
+export const UpdateCartItemSchema = z.object({
+  itemId: z.string().cuid(),
+  quantity: z.number().int().positive("Quantidade deve ser positiva"),
+});
+
+export const RemoveCartItemSchema = z.object({
+  itemId: z.string().cuid(),
+});
+
+export type AddToCartInput = z.infer<typeof AddToCartSchema>;
+export type UpdateCartItemInput = z.infer<typeof UpdateCartItemSchema>;
+export type RemoveCartItemInput = z.infer<typeof RemoveCartItemSchema>;
+
 // ---- Tipos inferidos ----
 export type BombomCreate = z.infer<typeof BombomCreateSchema>;
 export type BombomUpdate = z.infer<typeof BombomUpdateSchema>;

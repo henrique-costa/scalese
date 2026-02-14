@@ -115,10 +115,19 @@ export default async function Home() {
                   const isCombo = "servePessoas" in produto;
 
                   let badge = "";
-                  if (isBombom && "peso" in produto) badge = `${produto.peso}g`;
-                  if (isBolo && "tamanho" in produto) badge = `Tamanho ${produto.tamanho}`;
-                  if (isCombo && "servePessoas" in produto)
+                  let productType: "BOMBOM" | "BOLO" | "COMBO" = "BOMBOM";
+                  if (isBombom && "peso" in produto) {
+                    badge = `${produto.peso}g`;
+                    productType = "BOMBOM";
+                  }
+                  if (isBolo && "tamanho" in produto) {
+                    badge = `Tamanho ${produto.tamanho}`;
+                    productType = "BOLO";
+                  }
+                  if (isCombo && "servePessoas" in produto) {
                     badge = `Serve ${produto.servePessoas} pessoas`;
+                    productType = "COMBO";
+                  }
 
                   return (
                     <ProductCard
@@ -131,6 +140,7 @@ export default async function Home() {
                       sabor={"sabor" in produto ? produto.sabor : undefined}
                       destaque={produto.destaque}
                       badge={badge}
+                      productType={productType}
                     />
                   );
                 })}

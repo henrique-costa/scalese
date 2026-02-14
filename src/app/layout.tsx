@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { CartProvider } from "@/contexts/CartContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +17,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="pt-BR">
-        <body className="min-h-screen flex flex-col">{children}</body>
+        <body className="min-h-screen flex flex-col">
+          <CartProvider>{children}</CartProvider>
+        </body>
       </html>
     </ClerkProvider>
   );

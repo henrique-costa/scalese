@@ -83,6 +83,7 @@ export default async function BombonsPage() {
                       sabor={bombom.sabor}
                       destaque={bombom.destaque}
                       badge={`${bombom.peso}g · ${bombom.unidades} un`}
+                      productType="BOMBOM"
                     />
                   ))}
                 </div>
