@@ -17,10 +17,10 @@ export async function listarBombons(
 ): Promise<ApiResponse<Bombom[]>> {
   return safeAction(async () => {
     const where = apenasDisponiveis ? { disponivel: true } : {};
-    return prisma.bombom.findMany({
-      where,
-      orderBy: [{ destaque: "desc" }, { createdAt: "desc" }],
-    });
+    const orderBy = apenasDisponiveis
+      ? [{ destaque: "desc" as const }, { createdAt: "desc" as const }]
+      : [{ createdAt: "desc" as const }];
+    return prisma.bombom.findMany({ where, orderBy });
   });
 }
 

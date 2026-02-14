@@ -17,10 +17,10 @@ export async function listarBolos(
 ): Promise<ApiResponse<Bolo[]>> {
   return safeAction(async () => {
     const where = apenasDisponiveis ? { disponivel: true } : {};
-    return prisma.bolo.findMany({
-      where,
-      orderBy: [{ destaque: "desc" }, { createdAt: "desc" }],
-    });
+    const orderBy = apenasDisponiveis
+      ? [{ destaque: "desc" as const }, { createdAt: "desc" as const }]
+      : [{ createdAt: "desc" as const }];
+    return prisma.bolo.findMany({ where, orderBy });
   });
 }
 

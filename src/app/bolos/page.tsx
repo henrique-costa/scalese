@@ -4,6 +4,8 @@ import BolosList from "@/components/products/BolosList";
 import { listarBolos } from "@/actions";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Bolos Personalizados | Confetteria Scalese",
   description:

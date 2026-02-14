@@ -17,10 +17,10 @@ export async function listarCombos(
 ): Promise<ApiResponse<ComboFesta[]>> {
   return safeAction(async () => {
     const where = apenasDisponiveis ? { disponivel: true } : {};
-    return prisma.comboFesta.findMany({
-      where,
-      orderBy: [{ destaque: "desc" }, { servePessoas: "asc" }],
-    });
+    const orderBy = apenasDisponiveis
+      ? [{ destaque: "desc" as const }, { servePessoas: "asc" as const }]
+      : [{ createdAt: "desc" as const }];
+    return prisma.comboFesta.findMany({ where, orderBy });
   });
 }
 

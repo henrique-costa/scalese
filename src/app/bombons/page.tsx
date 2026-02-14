@@ -4,6 +4,8 @@ import ProductCard from "@/components/products/ProductCard";
 import { listarBombons } from "@/actions";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Bombons Gourmet | Confetteria Scalese",
   description:

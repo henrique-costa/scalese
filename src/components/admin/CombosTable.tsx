@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import DeleteModal from "./DeleteModal";
@@ -15,7 +14,7 @@ interface CombosTableProps {
 }
 
 export default function CombosTable({ combos }: CombosTableProps) {
-  const router = useRouter();
+  const [items, setItems] = useState(combos);
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
@@ -23,7 +22,7 @@ export default function CombosTable({ combos }: CombosTableProps) {
   }>({ isOpen: false, combo: null });
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const combosFiltrados = combos.filter((combo) =>
+  const combosFiltrados = items.filter((combo) =>
     combo.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -34,8 +33,9 @@ export default function CombosTable({ combos }: CombosTableProps) {
     const result = await adminDeletarCombo(deleteModal.combo.id);
 
     if (result.success) {
+      const deletedId = deleteModal.combo.id;
       setDeleteModal({ isOpen: false, combo: null });
-      router.refresh();
+      setItems((prev) => prev.filter((c) => c.id !== deletedId));
     } else {
       alert(result.error || "Erro ao deletar combo");
     }
@@ -43,14 +43,21 @@ export default function CombosTable({ combos }: CombosTableProps) {
   };
 
   const handleToggle = async (combo: ComboFesta, field: "destaque" | "disponivel") => {
+    // Optimistic update
+    setItems((prev) =>
+      prev.map((c) => (c.id === combo.id ? { ...c, [field]: !c[field] } : c))
+    );
+
     const result = await adminAtualizarCombo({
       id: combo.id,
       [field]: !combo[field],
     });
 
-    if (result.success) {
-      router.refresh();
-    } else {
+    if (!result.success) {
+      // Revert on error
+      setItems((prev) =>
+        prev.map((c) => (c.id === combo.id ? { ...c, [field]: combo[field] } : c))
+      );
       alert(result.error || "Erro ao atualizar combo");
     }
   };

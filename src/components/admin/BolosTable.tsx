@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import DeleteModal from "./DeleteModal";
@@ -15,7 +14,7 @@ interface BolosTableProps {
 }
 
 export default function BolosTable({ bolos }: BolosTableProps) {
-  const router = useRouter();
+  const [items, setItems] = useState(bolos);
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
@@ -23,7 +22,7 @@ export default function BolosTable({ bolos }: BolosTableProps) {
   }>({ isOpen: false, bolo: null });
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const bolosFiltrados = bolos.filter(
+  const bolosFiltrados = items.filter(
     (bolo) =>
       bolo.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
       bolo.sabor.toLowerCase().includes(searchTerm.toLowerCase())
@@ -36,8 +35,9 @@ export default function BolosTable({ bolos }: BolosTableProps) {
     const result = await adminDeletarBolo(deleteModal.bolo.id);
 
     if (result.success) {
+      const deletedId = deleteModal.bolo.id;
       setDeleteModal({ isOpen: false, bolo: null });
-      router.refresh();
+      setItems((prev) => prev.filter((b) => b.id !== deletedId));
     } else {
       alert(result.error || "Erro ao deletar bolo");
     }
@@ -45,14 +45,19 @@ export default function BolosTable({ bolos }: BolosTableProps) {
   };
 
   const handleToggle = async (bolo: Bolo, field: "destaque" | "disponivel") => {
+    setItems((prev) =>
+      prev.map((b) => (b.id === bolo.id ? { ...b, [field]: !b[field] } : b))
+    );
+
     const result = await adminAtualizarBolo({
       id: bolo.id,
       [field]: !bolo[field],
     });
 
-    if (result.success) {
-      router.refresh();
-    } else {
+    if (!result.success) {
+      setItems((prev) =>
+        prev.map((b) => (b.id === bolo.id ? { ...b, [field]: bolo[field] } : b))
+      );
       alert(result.error || "Erro ao atualizar bolo");
     }
   };

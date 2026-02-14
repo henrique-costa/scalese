@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import DeleteModal from "./DeleteModal";
@@ -15,7 +14,7 @@ interface BombonsTableProps {
 }
 
 export default function BombonsTable({ bombons }: BombonsTableProps) {
-  const router = useRouter();
+  const [items, setItems] = useState(bombons);
   const [searchTerm, setSearchTerm] = useState("");
   const [deleteModal, setDeleteModal] = useState<{
     isOpen: boolean;
@@ -23,8 +22,7 @@ export default function BombonsTable({ bombons }: BombonsTableProps) {
   }>({ isOpen: false, bombom: null });
   const [isDeleting, setIsDeleting] = useState(false);
 
-  // Filtrar bombons
-  const bomsonsFiltrados = bombons.filter(
+  const bomsonsFiltrados = items.filter(
     (bombom) =>
       bombom.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
       bombom.sabor.toLowerCase().includes(searchTerm.toLowerCase())
@@ -37,8 +35,9 @@ export default function BombonsTable({ bombons }: BombonsTableProps) {
     const result = await adminDeletarBombom(deleteModal.bombom.id);
 
     if (result.success) {
+      const deletedId = deleteModal.bombom.id;
       setDeleteModal({ isOpen: false, bombom: null });
-      router.refresh();
+      setItems((prev) => prev.filter((b) => b.id !== deletedId));
     } else {
       alert(result.error || "Erro ao deletar bombom");
     }
@@ -49,14 +48,19 @@ export default function BombonsTable({ bombons }: BombonsTableProps) {
     bombom: Bombom,
     field: "destaque" | "disponivel"
   ) => {
+    setItems((prev) =>
+      prev.map((b) => (b.id === bombom.id ? { ...b, [field]: !b[field] } : b))
+    );
+
     const result = await adminAtualizarBombom({
       id: bombom.id,
       [field]: !bombom[field],
     });
 
-    if (result.success) {
-      router.refresh();
-    } else {
+    if (!result.success) {
+      setItems((prev) =>
+        prev.map((b) => (b.id === bombom.id ? { ...b, [field]: bombom[field] } : b))
+      );
       alert(result.error || "Erro ao atualizar bombom");
     }
   };

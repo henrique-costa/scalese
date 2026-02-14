@@ -4,6 +4,8 @@ import ComboCard from "@/components/products/ComboCard";
 import { listarCombos } from "@/actions";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Combos Festa | Confetteria Scalese",
   description:
