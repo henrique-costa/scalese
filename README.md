@@ -43,45 +43,5 @@ npm test
 
 ---
 
-## 📁 Estrutura do Projeto
 
-```
-confetteria-scalese/
-├── prisma/
-│   ├── schema.prisma      # 3 entidades: Bombom, Bolo, ComboFesta
-│   └── seed.ts            # Dados de exemplo
-├── src/
-│   ├── actions/           # Server Actions (CRUD)
-│   │   ├── bombom.actions.ts
-│   │   ├── bolo.actions.ts
-│   │   └── combo.actions.ts
-│   ├── app/
-│   │   ├── globals.css    # Identidade visual Scalese
-│   │   ├── layout.tsx     # Root layout
-│   │   └── page.tsx       # Home (placeholder)
-│   ├── lib/
-│   │   ├── prisma.ts      # Singleton do Prisma Client
-│   │   ├── utils.ts       # Utilitários (safeAction, formatPrice)
-│   │   └── validations.ts # Schemas Zod para todas as entidades
-│   └── middleware.ts       # Middleware (Clerk no Passo 2)
-├── __tests__/
-│   ├── validations.test.ts # Testes das validações Zod
-│   └── utils.test.ts       # Testes dos utilitários
-└── .env.example
-```
-
----
-
-## 🎨 Paleta de Cores (Identidade Scalese)
-
-| Cor | Hex | Uso |
-|-----|-----|-----|
-| Rosa | `#E8A0BF` | Cor principal, botões, destaques |
-| Rosa Claro | `#F5D0E0` | Backgrounds suaves |
-| Dourado | `#C9A96E` | Detalhes premium, bordas |
-| Verde Menta | `#8DBFAB` | Acentos, badges |
-| Marrom Chocolate | `#5C3D2E` | Textos, títulos |
-| Creme | `#FFF8F0` | Background principal |
-
----
 
